@@ -11,6 +11,16 @@ pipeline
          { sh 'mvn package'}
          
          }}
+
+        stage('deploy to dev')
+         {
+             steps
+               {
+                sshagent(['jenkins-tomcat-ci-cd']) 
+                { sh 'scp -o StrictHostKeyChecking=no **/*.war ec2-user@172.31.45.221:/usr/share/tomcat/webapps'}
+                  }
+
+          }
       
 
     }
